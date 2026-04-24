@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef } from "react"
+import { scopeSvg } from "@/app/lib/svgScope"
 
 export interface CardData {
   fullName: string
@@ -43,7 +44,8 @@ export default function CardPreview({ svgFile, data, className }: Props) {
       .then((r) => r.text())
       .then((svgText) => {
         if (containerRef.current) {
-          const processed = data ? substituteData(svgText, data) : svgText
+          const substituted = data ? substituteData(svgText, data) : svgText
+          const processed = scopeSvg(substituted)
           containerRef.current.innerHTML = processed
           const svg = containerRef.current.querySelector("svg")
           if (svg) {

@@ -2,7 +2,7 @@
 
 import { signOut, useSession } from "next-auth/react"
 import Link from "next/link"
-import { LogOut, CreditCard, Plus } from "lucide-react"
+import { LogOut, CreditCard, Plus, Building2 } from "lucide-react"
 
 export default function Navbar() {
   const { data: session } = useSession()
@@ -32,6 +32,14 @@ export default function Navbar() {
           >
             <CreditCard size={15} />
             <span className="hidden sm:block">My Cards</span>
+          </Link>
+
+          <Link
+            href="/offices"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-slate-600 hover:bg-slate-100 text-sm transition-colors"
+          >
+            <Building2 size={15} />
+            <span className="hidden sm:block">Offices</span>
           </Link>
 
           <div className="flex items-center gap-2 pl-3 border-l border-slate-200">

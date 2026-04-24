@@ -6,6 +6,22 @@ const prisma = new PrismaClient({
 })
 
 async function main() {
+  const offices = [
+    {
+      name: "PT YCP Indonesia",
+      address: "Satrio Tower, 22/F – Unit C2, Jl. Prof. Dr. Satrio Kav C4, Kuningan Timur, South Jakarta, Indonesia",
+      phone: "+62 21 2598 2120",
+      website: "ycp.com",
+    },
+  ]
+
+  for (const o of offices) {
+    const existing = await prisma.office.findFirst({ where: { name: o.name } })
+    if (!existing) await prisma.office.create({ data: o })
+  }
+
+  console.log("Seed complete: offices inserted")
+
   const templates = [
     {
       name: "PRO-IDN Front",

@@ -90,6 +90,21 @@ model Template {
   @@map("BC_Template")
 }
 
+model Office {
+  id      String  @id @default(dbgenerated("gen_random_uuid()::text"))
+  name    String
+  address String?
+  phone   String?
+  website String?
+
+  businessCards BusinessCard[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("BC_Office")
+}
+
 model BusinessCard {
   id              String   @id @default(dbgenerated("gen_random_uuid()::text"))
   userId          String
@@ -98,6 +113,8 @@ model BusinessCard {
   frontTemplate   Template @relation("FrontTemplate", fields: [frontTemplateId], references: [id])
   backTemplateId  String
   backTemplate    Template @relation("BackTemplate", fields: [backTemplateId], references: [id])
+  officeId        String?
+  linkedOffice    Office?  @relation(fields: [officeId], references: [id])
 
   fullName String
   position String

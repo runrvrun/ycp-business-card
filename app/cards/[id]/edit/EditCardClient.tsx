@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import TemplateSelector, { Template } from "@/app/components/TemplateSelector"
-import CardForm from "@/app/components/CardForm"
+import CardForm, { OfficeOption } from "@/app/components/CardForm"
 import CardPreview, { CardData } from "@/app/components/CardPreview"
 import { Save, LayoutTemplate } from "lucide-react"
 
@@ -18,6 +18,7 @@ interface CardRecord {
   phone: string | null
   mobile: string | null
   website: string | null
+  officeId: string | null
   frontTemplate: Template
   backTemplate: Template
 }
@@ -26,12 +27,14 @@ interface Props {
   card: CardRecord
   frontTemplates: Template[]
   backTemplates: Template[]
+  offices: OfficeOption[]
 }
 
-export default function EditCardClient({ card, frontTemplates, backTemplates }: Props) {
+export default function EditCardClient({ card, frontTemplates, backTemplates, offices }: Props) {
   const router = useRouter()
   const [frontTemplate, setFrontTemplate] = useState<Template>(card.frontTemplate)
   const [backTemplate, setBackTemplate] = useState<Template>(card.backTemplate)
+  const [officeId, setOfficeId] = useState<string | null>(card.officeId)
   const [cardData, setCardData] = useState<CardData>({
     fullName: card.fullName,
     position: card.position,
@@ -47,6 +50,11 @@ export default function EditCardClient({ card, frontTemplates, backTemplates }: 
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState("")
 
+  function handleOfficeSelect(id: string | null, prefill: Partial<CardData>) {
+    setOfficeId(id)
+    if (id) setCardData((prev) => ({ ...prev, ...prefill }))
+  }
+
   async function handleSave() {
     if (!cardData.fullName || !cardData.position) {
       setError("Full Name and Position are required.")
@@ -60,6 +68,7 @@ export default function EditCardClient({ card, frontTemplates, backTemplates }: 
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...cardData,
+          officeId,
           frontTemplateId: frontTemplate.id,
           backTemplateId: backTemplate.id,
         }),
@@ -79,19 +88,11 @@ export default function EditCardClient({ card, frontTemplates, backTemplates }: 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-white rounded-2xl border border-slate-200 p-6">
           <h2 className="text-sm font-semibold text-slate-700 mb-4">Front Design</h2>
-          <TemplateSelector
-            templates={frontTemplates}
-            selectedId={frontTemplate.id}
-            onSelect={setFrontTemplate}
-          />
+          <TemplateSelector templates={frontTemplates} selectedId={frontTemplate.id} onSelect={setFrontTemplate} />
         </div>
         <div className="bg-white rounded-2xl border border-slate-200 p-6">
           <h2 className="text-sm font-semibold text-slate-700 mb-4">Back Design</h2>
-          <TemplateSelector
-            templates={backTemplates}
-            selectedId={backTemplate.id}
-            onSelect={setBackTemplate}
-          />
+          <TemplateSelector templates={backTemplates} selectedId={backTemplate.id} onSelect={setBackTemplate} />
         </div>
       </div>
 
@@ -99,7 +100,13 @@ export default function EditCardClient({ card, frontTemplates, backTemplates }: 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-white rounded-2xl border border-slate-200 p-6">
           <h2 className="text-sm font-semibold text-slate-700 mb-4">Card Details</h2>
-          <CardForm data={cardData} onChange={setCardData} />
+          <CardForm
+            data={cardData}
+            onChange={setCardData}
+            offices={offices}
+            officeId={officeId}
+            onOfficeSelect={handleOfficeSelect}
+          />
         </div>
 
         <div className="flex flex-col gap-4">

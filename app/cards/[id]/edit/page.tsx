@@ -18,13 +18,14 @@ export default async function EditCardPage({ params }: Params) {
   const { id } = await params
   const userId = (session.user as { id: string }).id
 
-  const [card, frontTemplates, backTemplates] = await Promise.all([
+  const [card, frontTemplates, backTemplates, offices] = await Promise.all([
     prisma.businessCard.findFirst({
       where: { id, userId, deletedAt: null },
       include: { frontTemplate: true, backTemplate: true },
     }),
     prisma.template.findMany({ where: { isActive: true, type: "FRONT" }, orderBy: { sortOrder: "asc" } }),
     prisma.template.findMany({ where: { isActive: true, type: "BACK" }, orderBy: { sortOrder: "asc" } }),
+    prisma.office.findMany({ orderBy: { name: "asc" } }),
   ])
 
   if (!card) notFound()
@@ -42,7 +43,7 @@ export default async function EditCardPage({ params }: Params) {
           </Link>
           <h1 className="text-xl font-semibold text-slate-800">Edit Card</h1>
         </div>
-        <EditCardClient card={card} frontTemplates={frontTemplates} backTemplates={backTemplates} />
+        <EditCardClient card={card} frontTemplates={frontTemplates} backTemplates={backTemplates} offices={offices} />
       </main>
     </div>
   )

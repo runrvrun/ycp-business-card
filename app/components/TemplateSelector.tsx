@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef } from "react"
+import { scopeSvg } from "@/app/lib/svgScope"
 
 export interface Template {
   id: string
@@ -27,7 +28,7 @@ function TemplateThumbnail({ svgFile }: { svgFile: string }) {
       .then((r) => r.text())
       .then((svg) => {
         if (ref.current) {
-          ref.current.innerHTML = svg
+          ref.current.innerHTML = scopeSvg(svg)
           const el = ref.current.querySelector("svg")
           if (el) {
             el.style.width = "100%"

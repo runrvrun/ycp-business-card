@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import TemplateSelector, { Template } from "@/app/components/TemplateSelector"
-import CardForm from "@/app/components/CardForm"
+import CardForm, { OfficeOption } from "@/app/components/CardForm"
 import CardPreview from "@/app/components/CardPreview"
 import { CardData } from "@/app/components/CardPreview"
 import { ChevronLeft, ChevronRight, Save, LayoutTemplate } from "lucide-react"
@@ -11,6 +11,7 @@ import { ChevronLeft, ChevronRight, Save, LayoutTemplate } from "lucide-react"
 interface Props {
   frontTemplates: Template[]
   backTemplates: Template[]
+  offices: OfficeOption[]
   defaultData: CardData
 }
 
@@ -22,15 +23,21 @@ const STEPS: { key: Step; label: string }[] = [
   { key: "details", label: "Fill Details" },
 ]
 
-export default function NewCardClient({ frontTemplates, backTemplates, defaultData }: Props) {
+export default function NewCardClient({ frontTemplates, backTemplates, offices, defaultData }: Props) {
   const router = useRouter()
   const [step, setStep] = useState<Step>("front")
   const [frontTemplate, setFrontTemplate] = useState<Template | null>(frontTemplates[0] ?? null)
   const [backTemplate, setBackTemplate] = useState<Template | null>(backTemplates[0] ?? null)
   const [cardData, setCardData] = useState<CardData>(defaultData)
+  const [officeId, setOfficeId] = useState<string | null>(null)
   const [previewSide, setPreviewSide] = useState<"front" | "back">("front")
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState("")
+
+  function handleOfficeSelect(id: string | null, prefill: Partial<CardData>) {
+    setOfficeId(id)
+    if (id) setCardData((prev) => ({ ...prev, ...prefill }))
+  }
 
   async function handleSave() {
     if (!cardData.fullName || !cardData.position) {
@@ -49,6 +56,7 @@ export default function NewCardClient({ frontTemplates, backTemplates, defaultDa
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...cardData,
+          officeId,
           frontTemplateId: frontTemplate.id,
           backTemplateId: backTemplate.id,
         }),
@@ -61,8 +69,6 @@ export default function NewCardClient({ frontTemplates, backTemplates, defaultDa
       setSaving(false)
     }
   }
-
-  const currentStepIndex = STEPS.findIndex((s) => s.key === step)
 
   function goTo(s: Step) {
     if (s === "back" && !frontTemplate) return
@@ -91,16 +97,11 @@ export default function NewCardClient({ frontTemplates, backTemplates, defaultDa
         ))}
       </div>
 
-      {/* Step: choose front */}
       {step === "front" && (
         <div className="flex flex-col gap-4">
           <div className="bg-white rounded-2xl border border-slate-200 p-6">
             <h2 className="text-sm font-semibold text-slate-700 mb-4">Select Front Design</h2>
-            <TemplateSelector
-              templates={frontTemplates}
-              selectedId={frontTemplate?.id ?? ""}
-              onSelect={setFrontTemplate}
-            />
+            <TemplateSelector templates={frontTemplates} selectedId={frontTemplate?.id ?? ""} onSelect={setFrontTemplate} />
           </div>
           <div className="flex justify-end">
             <button
@@ -114,16 +115,11 @@ export default function NewCardClient({ frontTemplates, backTemplates, defaultDa
         </div>
       )}
 
-      {/* Step: choose back */}
       {step === "back" && (
         <div className="flex flex-col gap-4">
           <div className="bg-white rounded-2xl border border-slate-200 p-6">
             <h2 className="text-sm font-semibold text-slate-700 mb-4">Select Back Design</h2>
-            <TemplateSelector
-              templates={backTemplates}
-              selectedId={backTemplate?.id ?? ""}
-              onSelect={setBackTemplate}
-            />
+            <TemplateSelector templates={backTemplates} selectedId={backTemplate?.id ?? ""} onSelect={setBackTemplate} />
           </div>
           <div className="flex justify-between">
             <button
@@ -143,16 +139,19 @@ export default function NewCardClient({ frontTemplates, backTemplates, defaultDa
         </div>
       )}
 
-      {/* Step: fill details */}
       {step === "details" && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Form */}
           <div className="bg-white rounded-2xl border border-slate-200 p-6">
             <h2 className="text-sm font-semibold text-slate-700 mb-4">Card Details</h2>
-            <CardForm data={cardData} onChange={setCardData} />
+            <CardForm
+              data={cardData}
+              onChange={setCardData}
+              offices={offices}
+              officeId={officeId}
+              onOfficeSelect={handleOfficeSelect}
+            />
           </div>
 
-          {/* Preview */}
           <div className="flex flex-col gap-4">
             <div className="bg-white rounded-2xl border border-slate-200 p-6">
               <div className="flex items-center justify-between mb-4">
@@ -180,7 +179,7 @@ export default function NewCardClient({ frontTemplates, backTemplates, defaultDa
                   <CardPreview svgFile={backTemplate.svgFile} />
                 )}
               </div>
-              <div className="flex items-center gap-1.5 mt-2 text-center justify-center">
+              <div className="flex items-center gap-1.5 mt-2 justify-center">
                 <LayoutTemplate size={12} className="text-slate-400" />
                 <p className="text-xs text-slate-400">
                   {previewSide === "front" ? frontTemplate?.name : backTemplate?.name}
