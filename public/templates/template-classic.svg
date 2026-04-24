@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1050 600" width="1050" height="600" font-family="Arial, Helvetica, sans-serif">
+  <!-- Background -->
+  <rect width="1050" height="600" fill="#ffffff"/>
+
+  <!-- Top red accent bar -->
+  <rect x="0" y="0" width="1050" height="12" fill="#c0272d"/>
+
+  <!-- Left red side bar -->
+  <rect x="0" y="12" width="8" height="588" fill="#c0272d"/>
+
+  <!-- YCP Logo area -->
+  <rect x="40" y="40" width="100" height="100" rx="8" fill="#c0272d"/>
+  <text x="90" y="105" font-size="36" font-weight="bold" fill="white" text-anchor="middle">YCP</text>
+
+  <!-- Divider line -->
+  <line x1="40" y1="170" x2="460" y2="170" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- Name -->
+  <text x="40" y="220" font-size="40" font-weight="bold" fill="#1a1a2e">{{fullName}}</text>
+
+  <!-- Position -->
+  <text x="40" y="265" font-size="24" fill="#c0272d" font-weight="500">{{position}}</text>
+
+  <!-- Division -->
+  <text x="40" y="305" font-size="20" fill="#64748b">{{division}}</text>
+
+  <!-- Right column: contact details -->
+  <!-- Email icon placeholder + text -->
+  <text x="570" y="120" font-size="18" fill="#64748b">✉</text>
+  <text x="600" y="120" font-size="18" fill="#334155">{{email}}</text>
+
+  <!-- Phone -->
+  <text x="570" y="160" font-size="18" fill="#64748b">☎</text>
+  <text x="600" y="160" font-size="18" fill="#334155">{{phone}}</text>
+
+  <!-- Mobile -->
+  <text x="570" y="200" font-size="18" fill="#64748b">📱</text>
+  <text x="600" y="200" font-size="18" fill="#334155">{{mobile}}</text>
+
+  <!-- Website -->
+  <text x="570" y="240" font-size="18" fill="#64748b">🌐</text>
+  <text x="600" y="240" font-size="18" fill="#334155">{{website}}</text>
+
+  <!-- Vertical divider between halves -->
+  <line x1="540" y1="80" x2="540" y2="520" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- Address area -->
+  <text x="570" y="310" font-size="18" fill="#64748b">📍</text>
+  <text x="600" y="310" font-size="17" fill="#334155">{{office}}</text>
+  <text x="600" y="340" font-size="15" fill="#94a3b8">{{address}}</text>
+
+  <!-- Bottom bar -->
+  <rect x="0" y="560" width="1050" height="40" fill="#1a1a2e"/>
+  <text x="525" y="585" font-size="14" fill="#94a3b8" text-anchor="middle" letter-spacing="3">www.ycp.com</text>
+</svg>

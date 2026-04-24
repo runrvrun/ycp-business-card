@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1050 600" width="1050" height="600" font-family="Arial, Helvetica, sans-serif">
+  <!-- Background -->
+  <rect width="1050" height="600" fill="#f8fafc"/>
+
+  <!-- Subtle border -->
+  <rect x="0" y="0" width="1050" height="600" fill="none" stroke="#e2e8f0" stroke-width="3"/>
+
+  <!-- Left accent strip -->
+  <rect x="0" y="0" width="6" height="600" fill="#334155"/>
+
+  <!-- YCP wordmark -->
+  <text x="50" y="80" font-size="22" font-weight="bold" fill="#334155" letter-spacing="6">YCP</text>
+
+  <!-- Thin separator -->
+  <line x1="50" y1="100" x2="500" y2="100" stroke="#e2e8f0" stroke-width="1"/>
+
+  <!-- Name -->
+  <text x="50" y="190" font-size="48" font-weight="bold" fill="#0f172a">{{fullName}}</text>
+
+  <!-- Position -->
+  <text x="50" y="238" font-size="22" fill="#64748b">{{position}}</text>
+
+  <!-- Division -->
+  <text x="50" y="272" font-size="17" fill="#94a3b8">{{division}}</text>
+
+  <!-- Bottom contact row -->
+  <line x1="50" y1="340" x2="1000" y2="340" stroke="#e2e8f0" stroke-width="1"/>
+
+  <text x="50" y="390" font-size="17" fill="#475569">{{email}}</text>
+  <text x="50" y="420" font-size="17" fill="#475569">{{phone}}</text>
+  <text x="50" y="450" font-size="17" fill="#475569">{{mobile}}</text>
+
+  <!-- Right: office + address -->
+  <text x="600" y="390" font-size="18" font-weight="600" fill="#334155">{{office}}</text>
+  <text x="600" y="420" font-size="15" fill="#94a3b8">{{address}}</text>
+  <text x="600" y="450" font-size="15" fill="#94a3b8">{{website}}</text>
+
+  <!-- Bottom mark -->
+  <rect x="0" y="570" width="1050" height="30" fill="#f1f5f9"/>
+  <line x1="0" y1="570" x2="1050" y2="570" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="50" y="590" font-size="12" fill="#94a3b8" letter-spacing="2">YCP SOLIDIANCE</text>
+</svg>

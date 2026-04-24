@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1050 600" width="1050" height="600" font-family="Arial, Helvetica, sans-serif">
+  <!-- Dark background -->
+  <rect width="1050" height="600" fill="#0f172a"/>
+
+  <!-- Gold diagonal accent -->
+  <polygon points="0,0 320,0 0,220" fill="#c9a84c" opacity="0.15"/>
+
+  <!-- Top gold bar -->
+  <rect x="0" y="0" width="1050" height="6" fill="#c9a84c"/>
+
+  <!-- YCP Logo -->
+  <rect x="40" y="40" width="90" height="90" rx="6" fill="#c9a84c"/>
+  <text x="85" y="98" font-size="30" font-weight="bold" fill="#0f172a" text-anchor="middle">YCP</text>
+
+  <!-- Name -->
+  <text x="40" y="210" font-size="44" font-weight="bold" fill="#f8fafc">{{fullName}}</text>
+
+  <!-- Position -->
+  <text x="40" y="258" font-size="24" fill="#c9a84c" font-weight="500">{{position}}</text>
+
+  <!-- Division -->
+  <text x="40" y="295" font-size="18" fill="#94a3b8">{{division}}</text>
+
+  <!-- Accent line -->
+  <rect x="40" y="320" width="200" height="2" fill="#c9a84c" opacity="0.5"/>
+
+  <!-- Contact block -->
+  <text x="40" y="370" font-size="17" fill="#cbd5e1">{{email}}</text>
+  <text x="40" y="400" font-size="17" fill="#cbd5e1">{{phone}}  {{mobile}}</text>
+  <text x="40" y="430" font-size="17" fill="#cbd5e1">{{website}}</text>
+
+  <!-- Right side: office / address -->
+  <rect x="620" y="80" width="2" height="440" fill="#c9a84c" opacity="0.3"/>
+
+  <text x="650" y="140" font-size="22" font-weight="bold" fill="#f8fafc">{{office}}</text>
+  <text x="650" y="175" font-size="16" fill="#94a3b8">{{address}}</text>
+
+  <!-- Bottom right decoration -->
+  <circle cx="980" cy="520" r="120" fill="#c9a84c" opacity="0.05"/>
+  <circle cx="980" cy="520" r="80" fill="#c9a84c" opacity="0.05"/>
+
+  <!-- Bottom bar -->
+  <rect x="0" y="555" width="1050" height="45" fill="#c9a84c" opacity="0.1"/>
+  <text x="525" y="583" font-size="13" fill="#c9a84c" text-anchor="middle" letter-spacing="4">YCP SOLIDIANCE</text>
+</svg>
