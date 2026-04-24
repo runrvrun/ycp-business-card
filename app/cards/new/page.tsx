@@ -11,10 +11,10 @@ export default async function NewCardPage() {
   const session = await getServerSession(authOptions)
   if (!session) redirect("/")
 
-  const templates = await prisma.template.findMany({
-    where: { isActive: true },
-    orderBy: { sortOrder: "asc" },
-  })
+  const [frontTemplates, backTemplates] = await Promise.all([
+    prisma.template.findMany({ where: { isActive: true, type: "FRONT" }, orderBy: { sortOrder: "asc" } }),
+    prisma.template.findMany({ where: { isActive: true, type: "BACK" }, orderBy: { sortOrder: "asc" } }),
+  ])
 
   const defaultData = {
     fullName: session.user?.name ?? "",
@@ -34,9 +34,9 @@ export default async function NewCardPage() {
       <main className="max-w-5xl mx-auto px-4 py-8">
         <div className="mb-6">
           <h1 className="text-xl font-semibold text-slate-800">New Business Card</h1>
-          <p className="text-sm text-slate-500 mt-0.5">Choose a template and fill in your details</p>
+          <p className="text-sm text-slate-500 mt-0.5">Choose designs and fill in your details</p>
         </div>
-        <NewCardClient templates={templates} defaultData={defaultData} />
+        <NewCardClient frontTemplates={frontTemplates} backTemplates={backTemplates} defaultData={defaultData} />
       </main>
     </div>
   )

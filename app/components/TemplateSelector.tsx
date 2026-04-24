@@ -8,6 +8,7 @@ export interface Template {
   description?: string | null
   svgFile: string
   thumbnail?: string | null
+  type: "FRONT" | "BACK"
   isActive: boolean
   sortOrder: number
 }
@@ -30,25 +31,29 @@ function TemplateThumbnail({ svgFile }: { svgFile: string }) {
           const el = ref.current.querySelector("svg")
           if (el) {
             el.style.width = "100%"
-            el.style.height = "100%"
+            el.style.height = "auto"
+            el.removeAttribute("width")
+            el.removeAttribute("height")
           }
         }
       })
       .catch(() => {})
   }, [svgFile])
 
-  return (
-    <div
-      ref={ref}
-      className="w-full h-full"
-      style={{ aspectRatio: "3.5 / 2" }}
-    />
-  )
+  return <div ref={ref} className="w-full" />
 }
 
 export default function TemplateSelector({ templates, selectedId, onSelect }: Props) {
+  if (templates.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-32 text-slate-400 text-sm border border-dashed border-slate-200 rounded-xl">
+        No templates available
+      </div>
+    )
+  }
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
       {templates.map((t) => (
         <button
           key={t.id}

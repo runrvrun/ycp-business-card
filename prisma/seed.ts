@@ -6,40 +6,32 @@ const prisma = new PrismaClient({
 })
 
 async function main() {
-  // Seed templates
   const templates = [
     {
-      name: "Classic",
-      description: "Clean white design with red YCP accent bar",
-      svgFile: "template-classic.svg",
-      thumbnail: "template-classic-thumb.svg",
+      name: "PRO-IDN Front",
+      description: "Indonesia front — white with YCP logo and personal details",
+      svgFile: "PRO-IDN-01.svg",
+      type: "FRONT" as const,
       isActive: true,
       sortOrder: 1,
     },
     {
-      name: "Modern Dark",
-      description: "Bold dark navy design with gold accents",
-      svgFile: "template-modern.svg",
-      thumbnail: "template-modern-thumb.svg",
+      name: "PRO-IDN Back",
+      description: "Indonesia back — navy with YCP logo",
+      svgFile: "PRO-IDN-02.svg",
+      type: "BACK" as const,
       isActive: true,
-      sortOrder: 2,
-    },
-    {
-      name: "Minimal",
-      description: "Simple minimal design with subtle gray accents",
-      svgFile: "template-minimal.svg",
-      thumbnail: "template-minimal-thumb.svg",
-      isActive: true,
-      sortOrder: 3,
+      sortOrder: 1,
     },
   ]
 
-  for (const template of templates) {
-    await prisma.template.upsert({
-      where: { name: template.name } as never,
-      update: template,
-      create: template,
-    })
+  for (const t of templates) {
+    const existing = await prisma.template.findFirst({ where: { svgFile: t.svgFile } })
+    if (existing) {
+      await prisma.template.update({ where: { id: existing.id }, data: t })
+    } else {
+      await prisma.template.create({ data: t })
+    }
   }
 
   console.log("Seed complete: templates inserted")

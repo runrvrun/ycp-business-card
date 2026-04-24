@@ -21,11 +21,15 @@ model User {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
+
+  @@map("BC_User")
 }
 
 enum UserRole {
   USER
   ADMIN
+
+  @@map("BC_UserRole")
 }
 
 model Account {
@@ -46,6 +50,7 @@ model Account {
   user User @relation(fields: [userId], references: [id])
 
   @@unique([provider, providerAccountId])
+  @@map("BC_Account")
 }
 
 model Session {
@@ -55,29 +60,44 @@ model Session {
   expires      DateTime
 
   user User @relation(fields: [userId], references: [id])
+
+  @@map("BC_Session")
+}
+
+enum TemplateType {
+  FRONT
+  BACK
+
+  @@map("BC_TemplateType")
 }
 
 model Template {
-  id          String  @id @default(dbgenerated("gen_random_uuid()::text"))
+  id          String       @id @default(dbgenerated("gen_random_uuid()::text"))
   name        String
   description String?
   svgFile     String
   thumbnail   String?
-  isActive    Boolean @default(true)
-  sortOrder   Int     @default(0)
+  type        TemplateType @default(FRONT)
+  isActive    Boolean      @default(true)
+  sortOrder   Int          @default(0)
 
-  businessCards BusinessCard[]
+  frontCards BusinessCard[] @relation("FrontTemplate")
+  backCards  BusinessCard[] @relation("BackTemplate")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("BC_Template")
 }
 
 model BusinessCard {
-  id         String   @id @default(dbgenerated("gen_random_uuid()::text"))
-  userId     String
-  user       User     @relation(fields: [userId], references: [id])
-  templateId String
-  template   Template @relation(fields: [templateId], references: [id])
+  id              String   @id @default(dbgenerated("gen_random_uuid()::text"))
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  frontTemplateId String
+  frontTemplate   Template @relation("FrontTemplate", fields: [frontTemplateId], references: [id])
+  backTemplateId  String
+  backTemplate    Template @relation("BackTemplate", fields: [backTemplateId], references: [id])
 
   fullName String
   position String
@@ -92,4 +112,6 @@ model BusinessCard {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
+
+  @@map("BC_BusinessCard")
 }

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import TemplateSelector, { Template } from "@/app/components/TemplateSelector"
 import CardForm from "@/app/components/CardForm"
 import CardPreview, { CardData } from "@/app/components/CardPreview"
-import { Save } from "lucide-react"
+import { Save, LayoutTemplate } from "lucide-react"
 
 interface CardRecord {
   id: string
@@ -18,17 +18,20 @@ interface CardRecord {
   phone: string | null
   mobile: string | null
   website: string | null
-  template: Template
+  frontTemplate: Template
+  backTemplate: Template
 }
 
 interface Props {
   card: CardRecord
-  templates: Template[]
+  frontTemplates: Template[]
+  backTemplates: Template[]
 }
 
-export default function EditCardClient({ card, templates }: Props) {
+export default function EditCardClient({ card, frontTemplates, backTemplates }: Props) {
   const router = useRouter()
-  const [selectedTemplate, setSelectedTemplate] = useState<Template>(card.template)
+  const [frontTemplate, setFrontTemplate] = useState<Template>(card.frontTemplate)
+  const [backTemplate, setBackTemplate] = useState<Template>(card.backTemplate)
   const [cardData, setCardData] = useState<CardData>({
     fullName: card.fullName,
     position: card.position,
@@ -40,6 +43,7 @@ export default function EditCardClient({ card, templates }: Props) {
     mobile: card.mobile ?? "",
     website: card.website ?? "",
   })
+  const [previewSide, setPreviewSide] = useState<"front" | "back">("front")
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState("")
 
@@ -54,7 +58,11 @@ export default function EditCardClient({ card, templates }: Props) {
       const res = await fetch(`/api/cards/${card.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...cardData, templateId: selectedTemplate.id }),
+        body: JSON.stringify({
+          ...cardData,
+          frontTemplateId: frontTemplate.id,
+          backTemplateId: backTemplate.id,
+        }),
       })
       if (!res.ok) throw new Error("Failed to save")
       router.push(`/cards/${card.id}`)
@@ -67,14 +75,24 @@ export default function EditCardClient({ card, templates }: Props) {
 
   return (
     <div className="flex flex-col gap-6">
-      {/* Template picker */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6">
-        <h2 className="text-sm font-semibold text-slate-700 mb-4">Template</h2>
-        <TemplateSelector
-          templates={templates}
-          selectedId={selectedTemplate.id}
-          onSelect={setSelectedTemplate}
-        />
+      {/* Template pickers */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="bg-white rounded-2xl border border-slate-200 p-6">
+          <h2 className="text-sm font-semibold text-slate-700 mb-4">Front Design</h2>
+          <TemplateSelector
+            templates={frontTemplates}
+            selectedId={frontTemplate.id}
+            onSelect={setFrontTemplate}
+          />
+        </div>
+        <div className="bg-white rounded-2xl border border-slate-200 p-6">
+          <h2 className="text-sm font-semibold text-slate-700 mb-4">Back Design</h2>
+          <TemplateSelector
+            templates={backTemplates}
+            selectedId={backTemplate.id}
+            onSelect={setBackTemplate}
+          />
+        </div>
       </div>
 
       {/* Form + Preview */}
@@ -86,9 +104,35 @@ export default function EditCardClient({ card, templates }: Props) {
 
         <div className="flex flex-col gap-4">
           <div className="bg-white rounded-2xl border border-slate-200 p-6">
-            <h2 className="text-sm font-semibold text-slate-700 mb-4">Live Preview</h2>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-sm font-semibold text-slate-700">Preview</h2>
+              <div className="flex rounded-lg border border-slate-200 overflow-hidden text-xs font-medium">
+                <button
+                  onClick={() => setPreviewSide("front")}
+                  className={`px-3 py-1.5 transition-colors ${previewSide === "front" ? "bg-[#c0272d] text-white" : "text-slate-500 hover:bg-slate-50"}`}
+                >
+                  Front
+                </button>
+                <button
+                  onClick={() => setPreviewSide("back")}
+                  className={`px-3 py-1.5 transition-colors ${previewSide === "back" ? "bg-[#c0272d] text-white" : "text-slate-500 hover:bg-slate-50"}`}
+                >
+                  Back
+                </button>
+              </div>
+            </div>
             <div className="rounded-xl overflow-hidden shadow-sm border border-slate-100">
-              <CardPreview svgFile={selectedTemplate.svgFile} data={cardData} />
+              {previewSide === "front" ? (
+                <CardPreview svgFile={frontTemplate.svgFile} data={cardData} />
+              ) : (
+                <CardPreview svgFile={backTemplate.svgFile} />
+              )}
+            </div>
+            <div className="flex items-center gap-1.5 mt-2 justify-center">
+              <LayoutTemplate size={12} className="text-slate-400" />
+              <p className="text-xs text-slate-400">
+                {previewSide === "front" ? frontTemplate.name : backTemplate.name}
+              </p>
             </div>
           </div>
 

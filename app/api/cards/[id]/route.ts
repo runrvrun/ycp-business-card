@@ -16,7 +16,7 @@ export async function GET(_req: NextRequest, { params }: Params) {
 
   const card = await prisma.businessCard.findFirst({
     where: { id, userId, deletedAt: null },
-    include: { template: true },
+    include: { frontTemplate: true, backTemplate: true },
   })
 
   if (!card) return NextResponse.json({ error: "Not found" }, { status: 404 })
@@ -37,12 +37,13 @@ export async function PUT(req: NextRequest, { params }: Params) {
   if (!existing) return NextResponse.json({ error: "Not found" }, { status: 404 })
 
   const body = await req.json()
-  const { templateId, fullName, position, division, office, address, email, phone, mobile, website } = body
+  const { frontTemplateId, backTemplateId, fullName, position, division, office, address, email, phone, mobile, website } = body
 
   const card = await prisma.businessCard.update({
     where: { id },
     data: {
-      templateId: templateId ?? existing.templateId,
+      frontTemplateId: frontTemplateId ?? existing.frontTemplateId,
+      backTemplateId: backTemplateId ?? existing.backTemplateId,
       fullName: fullName ?? existing.fullName,
       position: position ?? existing.position,
       division: division !== undefined ? division || null : existing.division,
@@ -53,7 +54,7 @@ export async function PUT(req: NextRequest, { params }: Params) {
       mobile: mobile !== undefined ? mobile || null : existing.mobile,
       website: website !== undefined ? website || null : existing.website,
     },
-    include: { template: true },
+    include: { frontTemplate: true, backTemplate: true },
   })
 
   return NextResponse.json(card)

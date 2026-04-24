@@ -16,7 +16,7 @@ export interface CardData {
 
 interface Props {
   svgFile: string
-  data: CardData
+  data?: CardData
   className?: string
 }
 
@@ -43,26 +43,23 @@ export default function CardPreview({ svgFile, data, className }: Props) {
       .then((r) => r.text())
       .then((svgText) => {
         if (containerRef.current) {
-          containerRef.current.innerHTML = substituteData(svgText, data)
+          const processed = data ? substituteData(svgText, data) : svgText
+          containerRef.current.innerHTML = processed
           const svg = containerRef.current.querySelector("svg")
           if (svg) {
             svg.style.width = "100%"
-            svg.style.height = "100%"
+            svg.style.height = "auto"
+            svg.removeAttribute("width")
+            svg.removeAttribute("height")
           }
         }
       })
       .catch(() => {
         if (containerRef.current) {
-          containerRef.current.innerHTML = `<div class="flex items-center justify-center h-full text-slate-400 text-sm">Template not found</div>`
+          containerRef.current.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:120px;color:#94a3b8;font-size:14px">Template not found</div>`
         }
       })
   }, [svgFile, data])
 
-  return (
-    <div
-      ref={containerRef}
-      className={className}
-      style={{ aspectRatio: "3.5 / 2" }}
-    />
-  )
+  return <div ref={containerRef} className={className} />
 }

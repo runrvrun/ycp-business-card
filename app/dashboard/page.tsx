@@ -17,7 +17,7 @@ export default async function DashboardPage() {
 
   const cards = await prisma.businessCard.findMany({
     where: { userId, deletedAt: null },
-    include: { template: true },
+    include: { frontTemplate: true, backTemplate: true },
     orderBy: { createdAt: "desc" },
   })
 
@@ -76,7 +76,7 @@ export default async function DashboardPage() {
                       <p className="text-sm text-slate-500 truncate">{card.position}</p>
                     </div>
                     <span className="shrink-0 text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-500">
-                      {card.template.name}
+                      {card.frontTemplate.name}
                     </span>
                   </div>
 

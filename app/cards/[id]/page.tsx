@@ -20,7 +20,7 @@ export default async function CardDetailPage({ params }: Params) {
 
   const card = await prisma.businessCard.findFirst({
     where: { id, userId, deletedAt: null },
-    include: { template: true },
+    include: { frontTemplate: true, backTemplate: true },
   })
   if (!card) notFound()
 
@@ -68,14 +68,25 @@ export default async function CardDetailPage({ params }: Params) {
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl border border-slate-200 p-6">
-          <div className="rounded-xl overflow-hidden shadow border border-slate-100 mb-6">
-            <CardPreview svgFile={card.template.svgFile} data={cardData} />
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col gap-6">
+          {/* Front + back preview side by side */}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <p className="text-xs font-medium text-slate-400 mb-2">Front — {card.frontTemplate.name}</p>
+              <div className="rounded-xl overflow-hidden shadow border border-slate-100">
+                <CardPreview svgFile={card.frontTemplate.svgFile} data={cardData} />
+              </div>
+            </div>
+            <div>
+              <p className="text-xs font-medium text-slate-400 mb-2">Back — {card.backTemplate.name}</p>
+              <div className="rounded-xl overflow-hidden shadow border border-slate-100">
+                <CardPreview svgFile={card.backTemplate.svgFile} />
+              </div>
+            </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm border-t border-slate-100 pt-4">
             {[
-              ["Template", card.template.name],
               ["Full Name", card.fullName],
               ["Position", card.position],
               ["Division", card.division],

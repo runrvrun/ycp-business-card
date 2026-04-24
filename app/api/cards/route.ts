@@ -13,7 +13,7 @@ export async function GET() {
 
   const cards = await prisma.businessCard.findMany({
     where: { userId, deletedAt: null },
-    include: { template: true },
+    include: { frontTemplate: true, backTemplate: true },
     orderBy: { createdAt: "desc" },
   })
 
@@ -27,16 +27,20 @@ export async function POST(req: NextRequest) {
   const userId = (session.user as { id: string }).id
   const body = await req.json()
 
-  const { templateId, fullName, position, division, office, address, email, phone, mobile, website } = body
+  const { frontTemplateId, backTemplateId, fullName, position, division, office, address, email, phone, mobile, website } = body
 
-  if (!templateId || !fullName || !position) {
-    return NextResponse.json({ error: "templateId, fullName, and position are required" }, { status: 400 })
+  if (!frontTemplateId || !backTemplateId || !fullName || !position) {
+    return NextResponse.json(
+      { error: "frontTemplateId, backTemplateId, fullName, and position are required" },
+      { status: 400 }
+    )
   }
 
   const card = await prisma.businessCard.create({
     data: {
       userId,
-      templateId,
+      frontTemplateId,
+      backTemplateId,
       fullName,
       position,
       division: division || null,
@@ -47,7 +51,7 @@ export async function POST(req: NextRequest) {
       mobile: mobile || null,
       website: website || null,
     },
-    include: { template: true },
+    include: { frontTemplate: true, backTemplate: true },
   })
 
   return NextResponse.json(card, { status: 201 })

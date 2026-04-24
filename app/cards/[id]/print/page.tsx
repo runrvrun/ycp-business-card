@@ -17,7 +17,7 @@ export default async function PrintPage({ params }: Params) {
 
   const card = await prisma.businessCard.findFirst({
     where: { id, userId, deletedAt: null },
-    include: { template: true },
+    include: { frontTemplate: true, backTemplate: true },
   })
   if (!card) notFound()
 
@@ -33,5 +33,13 @@ export default async function PrintPage({ params }: Params) {
     website: card.website ?? undefined,
   }
 
-  return <PrintClient svgFile={card.template.svgFile} data={cardData} templateName={card.template.name} />
+  return (
+    <PrintClient
+      frontSvgFile={card.frontTemplate.svgFile}
+      backSvgFile={card.backTemplate.svgFile}
+      data={cardData}
+      frontTemplateName={card.frontTemplate.name}
+      backTemplateName={card.backTemplate.name}
+    />
+  )
 }
