@@ -40,7 +40,7 @@ function buildPrintDocument(frontSvg: string, backSvg: string, name: string): st
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>${name} — Business Card</title>
+  <title>YCP Business Card - ${name}</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     @page { size: 55mm 91mm; margin: 0; }
