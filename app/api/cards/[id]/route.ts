@@ -37,7 +37,7 @@ export async function PUT(req: NextRequest, { params }: Params) {
   if (!existing) return NextResponse.json({ error: "Not found" }, { status: 404 })
 
   const body = await req.json()
-  const { frontTemplateId, backTemplateId, officeId, fullName, position, division, office, address, email, phone, mobile, website } = body
+  const { frontTemplateId, backTemplateId, officeId, fullName, position, division, office, address, email, email2, phone, mobile, whatsapp, website } = body
 
   const card = await prisma.businessCard.update({
     where: { id },
@@ -51,8 +51,10 @@ export async function PUT(req: NextRequest, { params }: Params) {
       office: office !== undefined ? office || null : existing.office,
       address: address !== undefined ? address || null : existing.address,
       email: email !== undefined ? email || null : existing.email,
+      email2: email2 !== undefined ? email2 || null : existing.email2,
       phone: phone !== undefined ? phone || null : existing.phone,
       mobile: mobile !== undefined ? mobile || null : existing.mobile,
+      whatsapp: whatsapp !== undefined ? whatsapp || null : existing.whatsapp,
       website: website !== undefined ? website || null : existing.website,
     },
     include: { frontTemplate: true, backTemplate: true },

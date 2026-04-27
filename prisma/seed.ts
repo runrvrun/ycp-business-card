@@ -39,6 +39,22 @@ async function main() {
       isActive: true,
       sortOrder: 1,
     },
+    {
+      name: "PRO-INT Front (2 Emails)",
+      description: "International front — office phone, mobile, two email addresses, website",
+      svgFile: "PRO-INT-2EMAIL.svg",
+      type: "FRONT" as const,
+      isActive: true,
+      sortOrder: 2,
+    },
+    {
+      name: "PRO-INT Front (WA/Line)",
+      description: "International front — mobile, WhatsApp/Line, email, website",
+      svgFile: "PRO-INT-WALINE.svg",
+      type: "FRONT" as const,
+      isActive: true,
+      sortOrder: 3,
+    },
   ]
 
   for (const t of templates) {

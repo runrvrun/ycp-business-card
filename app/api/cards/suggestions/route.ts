@@ -5,7 +5,7 @@ import { prisma } from "@/app/lib/prisma"
 
 export const runtime = "nodejs"
 
-const AUTOCOMPLETE_FIELDS = ["position", "division", "office", "address", "phone", "mobile", "email", "website"] as const
+const AUTOCOMPLETE_FIELDS = ["position", "division", "office", "address", "email", "email2", "phone", "mobile", "whatsapp", "website"] as const
 
 export async function GET() {
   const session = await getServerSession(authOptions)
@@ -20,9 +20,11 @@ export async function GET() {
       division: true,
       office: true,
       address: true,
+      email: true,
+      email2: true,
       phone: true,
       mobile: true,
-      email: true,
+      whatsapp: true,
       website: true,
     },
     orderBy: { createdAt: "desc" },

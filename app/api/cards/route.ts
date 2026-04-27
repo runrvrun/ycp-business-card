@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
   const userId = (session.user as { id: string }).id
   const body = await req.json()
 
-  const { frontTemplateId, backTemplateId, officeId, fullName, position, division, office, address, email, phone, mobile, website } = body
+  const { frontTemplateId, backTemplateId, officeId, fullName, position, division, office, address, email, email2, phone, mobile, whatsapp, website } = body
 
   if (!frontTemplateId || !backTemplateId || !fullName || !position) {
     return NextResponse.json(
@@ -48,8 +48,10 @@ export async function POST(req: NextRequest) {
       office: office || null,
       address: address || null,
       email: email || null,
+      email2: email2 || null,
       phone: phone || null,
       mobile: mobile || null,
+      whatsapp: whatsapp || null,
       website: website || null,
     },
     include: { frontTemplate: true, backTemplate: true },

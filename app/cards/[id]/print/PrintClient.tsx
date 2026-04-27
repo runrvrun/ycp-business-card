@@ -21,8 +21,10 @@ function substituteData(svg: string, data: CardData): string {
     .replace(/\{\{office\}\}/g, data.office || "")
     .replace(/\{\{address\}\}/g, data.address || "")
     .replace(/\{\{email\}\}/g, data.email || "")
+    .replace(/\{\{email2\}\}/g, data.email2 || "")
     .replace(/\{\{phone\}\}/g, data.phone || "")
     .replace(/\{\{mobile\}\}/g, data.mobile || "")
+    .replace(/\{\{whatsapp\}\}/g, data.whatsapp || "")
     .replace(/\{\{website\}\}/g, data.website || "")
 }
 

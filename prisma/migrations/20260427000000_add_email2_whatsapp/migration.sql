@@ -1,0 +1,3 @@
+ALTER TABLE "BC_BusinessCard"
+  ADD COLUMN IF NOT EXISTS "email2"   TEXT,
+  ADD COLUMN IF NOT EXISTS "whatsapp" TEXT;

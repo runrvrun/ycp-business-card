@@ -30,7 +30,9 @@ const fields: {
   { key: "position", label: "Position / Job Title", required: true, placeholder: "Senior Consultant" },
   { key: "division", label: "Division", placeholder: "Management Strategy Division" },
   { key: "email", label: "Email", placeholder: "jane.doe@ycp.com" },
+  { key: "email2", label: "Second Email", placeholder: "jane.doe@renoirgroup.com" },
   { key: "mobile", label: "Mobile", placeholder: "+62 812 0000 0000" },
+  { key: "whatsapp", label: "WhatsApp / Line", placeholder: "+62 812 0000 0000" },
 ]
 
 const officeFields: { key: keyof CardData; label: string; placeholder?: string }[] = [
@@ -40,7 +42,7 @@ const officeFields: { key: keyof CardData; label: string; placeholder?: string }
   { key: "website", label: "Website", placeholder: "ycp.com" },
 ]
 
-const AUTOCOMPLETE_FIELDS: (keyof CardData)[] = ["position", "division", "mobile", "email"]
+const AUTOCOMPLETE_FIELDS: (keyof CardData)[] = ["position", "division", "email", "email2", "mobile", "whatsapp"]
 
 export default function CardForm({ data, onChange, offices, officeId, onOfficeSelect }: Props) {
   const [suggestions, setSuggestions] = useState<Partial<Record<keyof CardData, string[]>>>({})
