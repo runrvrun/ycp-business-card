@@ -94,7 +94,7 @@ export default function CardForm({ data, onChange, offices, officeId, onOfficeSe
               placeholder={f.placeholder}
               required={f.required}
               list={hasSuggestions ? listId : undefined}
-              className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#c0272d]/30 focus:border-[#c0272d] placeholder:text-slate-300 transition"
+              className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#001C44]/30 focus:border-[#001C44] placeholder:text-slate-300 transition"
             />
             {hasSuggestions && (
               <datalist id={listId}>
@@ -132,7 +132,7 @@ export default function CardForm({ data, onChange, offices, officeId, onOfficeSe
             <select
               value={officeId ?? ""}
               onChange={(e) => handleOfficeSelect(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#c0272d]/30 focus:border-[#c0272d] text-slate-700 transition bg-white"
+              className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#001C44]/30 focus:border-[#001C44] text-slate-700 transition bg-white"
             >
               <option value="">— Select an office —</option>
               {offices.map((o) => (
@@ -156,7 +156,7 @@ export default function CardForm({ data, onChange, offices, officeId, onOfficeSe
               value={data[f.key] ?? ""}
               onChange={(e) => handleChange(f.key, e.target.value)}
               placeholder={f.placeholder}
-              className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#c0272d]/30 focus:border-[#c0272d] placeholder:text-slate-300 transition"
+              className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#001C44]/30 focus:border-[#001C44] placeholder:text-slate-300 transition"
             />
           </div>
         ))}

@@ -34,7 +34,7 @@ export default async function DashboardPage() {
           </div>
           <Link
             href="/cards/new"
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#c0272d] text-white text-sm font-medium hover:bg-[#a8222a] transition-colors"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#001C44] text-white text-sm font-medium hover:bg-[#001533] transition-colors"
           >
             <Plus size={16} />
             New Card
@@ -54,7 +54,7 @@ export default async function DashboardPage() {
             </div>
             <Link
               href="/cards/new"
-              className="px-5 py-2 rounded-lg bg-[#c0272d] text-white text-sm font-medium hover:bg-[#a8222a] transition-colors"
+              className="px-5 py-2 rounded-lg bg-[#001C44] text-white text-sm font-medium hover:bg-[#001533] transition-colors"
             >
               Create Card
             </Link>
@@ -67,7 +67,7 @@ export default async function DashboardPage() {
                 className="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-md transition-shadow"
               >
                 {/* Template colour strip */}
-                <div className="h-1.5 bg-[#c0272d]" />
+                <div className="h-1.5 bg-[#001C44]" />
 
                 <div className="p-5">
                   <div className="flex items-start justify-between gap-2 mb-3">

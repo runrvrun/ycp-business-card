@@ -49,7 +49,7 @@ function OfficeForm({
             value={form[f.key] ?? ""}
             onChange={set(f.key)}
             placeholder={f.placeholder}
-            className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#c0272d]/30 focus:border-[#c0272d] placeholder:text-slate-300 transition"
+            className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#001C44]/30 focus:border-[#001C44] placeholder:text-slate-300 transition"
           />
         </div>
       ))}
@@ -57,7 +57,7 @@ function OfficeForm({
         <button
           onClick={() => onSave(form)}
           disabled={saving || !form.name}
-          className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#c0272d] text-white text-sm font-medium hover:bg-[#a8222a] transition-colors disabled:opacity-50"
+          className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#001C44] text-white text-sm font-medium hover:bg-[#001533] transition-colors disabled:opacity-50"
         >
           <Check size={14} /> {saving ? "Saving…" : "Save"}
         </button>
@@ -132,14 +132,14 @@ export default function OfficeManager({ initialOffices }: { initialOffices: Offi
       <div className="flex justify-end">
         <button
           onClick={() => { setAdding(true); setEditingId(null) }}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#c0272d] text-white text-sm font-medium hover:bg-[#a8222a] transition-colors"
+          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#001C44] text-white text-sm font-medium hover:bg-[#001533] transition-colors"
         >
           <Plus size={15} /> Add Office
         </button>
       </div>
 
       {adding && (
-        <div className="bg-white rounded-2xl border border-[#c0272d]/30 p-6">
+        <div className="bg-white rounded-2xl border border-[#001C44]/30 p-6">
           <h2 className="text-sm font-semibold text-slate-700 mb-4">New Office</h2>
           <OfficeForm
             initial={EMPTY}

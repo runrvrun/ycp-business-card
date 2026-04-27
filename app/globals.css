@@ -2,9 +2,9 @@
 
 @layer base {
   :root {
-    --ycp-red: #c0272d;
-    --ycp-dark: #1a1a2e;
-    --ycp-gold: #c9a84c;
+    --ycp-navy: #001C44;
+    --ycp-blue: #1524A9;
+    --ycp-navy-hover: #001533;
   }
 }
 

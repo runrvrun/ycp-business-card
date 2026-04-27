@@ -2,6 +2,7 @@
 
 import { signOut, useSession } from "next-auth/react"
 import Link from "next/link"
+import Image from "next/image"
 import { LogOut, CreditCard, Plus, Building2 } from "lucide-react"
 
 export default function Navbar() {
@@ -10,17 +11,24 @@ export default function Navbar() {
   return (
     <header className="bg-white border-b border-slate-200 sticky top-0 z-50">
       <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
-        <Link href="/dashboard" className="flex items-center gap-2 font-semibold text-slate-800">
-          <div className="w-7 h-7 rounded bg-[#c0272d] flex items-center justify-center">
-            <span className="text-white text-xs font-bold">YCP</span>
-          </div>
-          <span className="text-sm hidden sm:block">Business Card</span>
+        <Link href="/dashboard" className="flex items-center gap-3">
+          <Image
+            src="/logo-ycp-navy.svg"
+            alt="YCP"
+            width={72}
+            height={26}
+            className="h-6 w-auto"
+            priority
+          />
+          <span className="text-sm font-semibold text-slate-600 hidden sm:block border-l border-slate-200 pl-3">
+            Business Card
+          </span>
         </Link>
 
         <nav className="flex items-center gap-3">
           <Link
             href="/cards/new"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#c0272d] text-white text-sm font-medium hover:bg-[#a8222a] transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#001C44] text-white text-sm font-medium hover:bg-[#001533] transition-colors"
           >
             <Plus size={15} />
             New Card

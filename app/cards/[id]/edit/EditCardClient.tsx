@@ -116,13 +116,13 @@ export default function EditCardClient({ card, frontTemplates, backTemplates, of
               <div className="flex rounded-lg border border-slate-200 overflow-hidden text-xs font-medium">
                 <button
                   onClick={() => setPreviewSide("front")}
-                  className={`px-3 py-1.5 transition-colors ${previewSide === "front" ? "bg-[#c0272d] text-white" : "text-slate-500 hover:bg-slate-50"}`}
+                  className={`px-3 py-1.5 transition-colors ${previewSide === "front" ? "bg-[#001C44] text-white" : "text-slate-500 hover:bg-slate-50"}`}
                 >
                   Front
                 </button>
                 <button
                   onClick={() => setPreviewSide("back")}
-                  className={`px-3 py-1.5 transition-colors ${previewSide === "back" ? "bg-[#c0272d] text-white" : "text-slate-500 hover:bg-slate-50"}`}
+                  className={`px-3 py-1.5 transition-colors ${previewSide === "back" ? "bg-[#001C44] text-white" : "text-slate-500 hover:bg-slate-50"}`}
                 >
                   Back
                 </button>
@@ -152,7 +152,7 @@ export default function EditCardClient({ card, frontTemplates, backTemplates, of
           <button
             onClick={handleSave}
             disabled={saving}
-            className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-[#c0272d] text-white text-sm font-medium hover:bg-[#a8222a] transition-colors disabled:opacity-60"
+            className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-[#001C44] text-white text-sm font-medium hover:bg-[#001533] transition-colors disabled:opacity-60"
           >
             <Save size={16} />
             {saving ? "Saving..." : "Save Changes"}

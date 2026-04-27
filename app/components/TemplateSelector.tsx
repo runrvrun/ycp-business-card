@@ -69,7 +69,7 @@ export default function TemplateSelector({ templates, selectedId, onSelect }: Pr
           onClick={() => onSelect(t)}
           className={`rounded-xl border-2 overflow-hidden text-left transition-all ${
             selectedId === t.id
-              ? "border-[#c0272d] shadow-md shadow-[#c0272d]/20"
+              ? "border-[#001C44] shadow-md shadow-[#001C44]/20"
               : "border-slate-200 hover:border-slate-300"
           }`}
         >
