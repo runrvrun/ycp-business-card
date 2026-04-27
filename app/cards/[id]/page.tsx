@@ -87,21 +87,21 @@ export default async function CardDetailPage({ params }: Params) {
 
           <div className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm border-t border-slate-100 pt-4">
             {[
-              ["Full Name", card.fullName],
-              ["Position", card.position],
-              ["Division", card.division],
-              ["Office", card.office],
-              ["Address", card.address],
-              ["Email", card.email],
-              ["Phone", card.phone],
-              ["Mobile", card.mobile],
-              ["Website", card.website],
+              ["Full Name", card.fullName, false],
+              ["Position", card.position, false],
+              ["Division", card.division, false],
+              ["Office", card.office, false],
+              ["Address", card.address, true],
+              ["Email", card.email, false],
+              ["Phone", card.phone, false],
+              ["Mobile", card.mobile, false],
+              ["Website", card.website, false],
             ]
               .filter(([, v]) => v)
-              .map(([label, value]) => (
-                <div key={label}>
-                  <p className="text-xs text-slate-400 font-medium">{label}</p>
-                  <p className="text-slate-700 mt-0.5">{value}</p>
+              .map(([label, value, wide]) => (
+                <div key={label as string} className={`min-w-0 ${wide ? "col-span-2" : ""}`}>
+                  <p className="text-xs text-slate-400 font-medium">{label as string}</p>
+                  <p className="text-slate-700 mt-0.5 break-words">{value as string}</p>
                 </div>
               ))}
           </div>
