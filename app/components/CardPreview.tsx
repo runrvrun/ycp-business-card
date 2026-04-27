@@ -45,7 +45,10 @@ export default function CardPreview({ svgFile, data, className }: Props) {
     if (!svgFile) return
 
     fetch(`/templates/${svgFile}`)
-      .then((r) => r.text())
+      .then((r) => {
+        if (!r.ok) throw new Error(`${r.status}`)
+        return r.text()
+      })
       .then((svgText) => {
         if (containerRef.current) {
           const substituted = data ? substituteData(svgText, data) : svgText
@@ -54,7 +57,7 @@ export default function CardPreview({ svgFile, data, className }: Props) {
           const svg = containerRef.current.querySelector("svg")
           if (svg) {
             svg.style.width = "100%"
-            svg.style.height = "auto"
+            svg.style.height = "100%"
             svg.removeAttribute("width")
             svg.removeAttribute("height")
           }
@@ -62,10 +65,10 @@ export default function CardPreview({ svgFile, data, className }: Props) {
       })
       .catch(() => {
         if (containerRef.current) {
-          containerRef.current.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:120px;color:#94a3b8;font-size:14px">Template not found</div>`
+          containerRef.current.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#94a3b8;font-size:14px">Template not found</div>`
         }
       })
   }, [svgFile, data])
 
-  return <div ref={containerRef} className={className} />
+  return <div ref={containerRef} className={className ?? "w-full h-full"} />
 }

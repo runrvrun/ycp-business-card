@@ -33,7 +33,7 @@ function prepareSvg(raw: string, data?: CardData): string {
   const scoped = scopeSvg(substituted)
   return scoped.replace(/<svg\b([^>]*?)>/, (_, attrs) => {
     const cleaned = attrs.replace(/\s*(width|height|style)="[^"]*"/g, "")
-    return `<svg${cleaned}>`
+    return `<svg${cleaned} style="width:100%;height:100%;display:block;">`
   })
 }
 
@@ -125,6 +125,7 @@ export default function PrintClient({
               </p>
               <div
                 className="rounded-xl overflow-hidden border border-slate-200 shadow-sm"
+                style={{ aspectRatio: "55/91" }}
                 dangerouslySetInnerHTML={{ __html: frontSvg }}
               />
             </div>
@@ -134,6 +135,7 @@ export default function PrintClient({
               </p>
               <div
                 className="rounded-xl overflow-hidden border border-slate-200 shadow-sm"
+                style={{ aspectRatio: "55/91" }}
                 dangerouslySetInnerHTML={{ __html: backSvg }}
               />
             </div>

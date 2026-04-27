@@ -25,23 +25,30 @@ function TemplateThumbnail({ svgFile }: { svgFile: string }) {
 
   useEffect(() => {
     fetch(`/templates/${svgFile}`)
-      .then((r) => r.text())
+      .then((r) => {
+        if (!r.ok) throw new Error(`${r.status}`)
+        return r.text()
+      })
       .then((svg) => {
         if (ref.current) {
           ref.current.innerHTML = scopeSvg(svg)
           const el = ref.current.querySelector("svg")
           if (el) {
             el.style.width = "100%"
-            el.style.height = "auto"
+            el.style.height = "100%"
             el.removeAttribute("width")
             el.removeAttribute("height")
           }
         }
       })
-      .catch(() => {})
+      .catch(() => {
+        if (ref.current) {
+          ref.current.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#94a3b8;font-size:11px">Template not found</div>`
+        }
+      })
   }, [svgFile])
 
-  return <div ref={ref} className="w-full" />
+  return <div ref={ref} className="w-full h-full" />
 }
 
 export default function TemplateSelector({ templates, selectedId, onSelect }: Props) {
@@ -66,7 +73,7 @@ export default function TemplateSelector({ templates, selectedId, onSelect }: Pr
               : "border-slate-200 hover:border-slate-300"
           }`}
         >
-          <div className="bg-white overflow-hidden">
+          <div className="bg-white overflow-hidden" style={{ aspectRatio: "55/91" }}>
             <TemplateThumbnail svgFile={t.svgFile} />
           </div>
           <div className="px-3 py-2 bg-white border-t border-slate-100">

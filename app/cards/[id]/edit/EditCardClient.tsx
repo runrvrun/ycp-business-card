@@ -128,7 +128,7 @@ export default function EditCardClient({ card, frontTemplates, backTemplates, of
                 </button>
               </div>
             </div>
-            <div className="rounded-xl overflow-hidden shadow-sm border border-slate-100">
+            <div className="rounded-xl overflow-hidden shadow-sm border border-slate-100" style={{ aspectRatio: "55/91" }}>
               {previewSide === "front" ? (
                 <CardPreview svgFile={frontTemplate.svgFile} data={cardData} />
               ) : (

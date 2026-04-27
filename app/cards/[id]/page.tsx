@@ -73,13 +73,13 @@ export default async function CardDetailPage({ params }: Params) {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <p className="text-xs font-medium text-slate-400 mb-2">Front — {card.frontTemplate.name}</p>
-              <div className="rounded-xl overflow-hidden shadow border border-slate-100">
+              <div className="rounded-xl overflow-hidden shadow border border-slate-100" style={{ aspectRatio: "55/91" }}>
                 <CardPreview svgFile={card.frontTemplate.svgFile} data={cardData} />
               </div>
             </div>
             <div>
               <p className="text-xs font-medium text-slate-400 mb-2">Back — {card.backTemplate.name}</p>
-              <div className="rounded-xl overflow-hidden shadow border border-slate-100">
+              <div className="rounded-xl overflow-hidden shadow border border-slate-100" style={{ aspectRatio: "55/91" }}>
                 <CardPreview svgFile={card.backTemplate.svgFile} />
               </div>
             </div>
