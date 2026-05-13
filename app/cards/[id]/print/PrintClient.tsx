@@ -88,9 +88,77 @@ function buildPrintDocument(frontSvg: string, backSvg: string, name: string): st
       width: 55mm !important;
       height: 91mm !important;
     }
+    .info-page {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Palatino Linotype", Palatino, serif;
+      background: white;
+    }
+    .info-content {
+      padding: 6mm;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .section-label {
+      font-size: 6pt;
+      font-weight: bold;
+      color: #001C44;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 2mm;
+    }
+    .color-swatch {
+      width: 100%;
+      height: 9mm;
+      background: #001C44;
+      border-radius: 0.8mm;
+      margin-bottom: 2mm;
+    }
+    .color-name {
+      font-size: 9pt;
+      font-weight: bold;
+      color: #001C44;
+      margin-bottom: 1.5mm;
+    }
+    .color-values {
+      font-family: "Courier New", Courier, monospace;
+      font-size: 6pt;
+      color: #444;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8mm;
+    }
+    .divider {
+      height: 0.3mm;
+      background: #e2e8f0;
+      margin: 4mm 0;
+    }
+    .font-name {
+      font-family: "Palatino Linotype", Palatino, serif;
+      font-size: 10pt;
+      color: #001C44;
+    }
   </style>
 </head>
 <body>
+  <div class="page info-page">
+    <div class="info-content">
+      <div class="section-label">Color</div>
+      <div class="color-swatch"></div>
+      <div class="color-name">Dark Blue</div>
+      <div class="color-values">
+        <span>RGB&nbsp;&nbsp;0 28 68</span>
+        <span>HEX&nbsp;&nbsp;#001C44</span>
+        <span>CSS&nbsp;&nbsp;rgba(0, 28, 68, 1)</span>
+      </div>
+      <div class="divider"></div>
+      <div class="section-label">Font</div>
+      <div class="font-name">Palatino Linotype</div>
+    </div>
+  </div>
   <div class="page">${frontSvg}</div>
   <div class="page">${backSvg}</div>
   <script>
@@ -142,7 +210,7 @@ export default function PrintClient({
           <div className="text-center">
             <p className="text-sm font-medium text-slate-700">{data.fullName}</p>
             <p className="text-xs text-slate-400 mt-0.5">
-              Front → page 1 &nbsp;·&nbsp; Back → page 2
+              Info → page 1 &nbsp;·&nbsp; Front → page 2 &nbsp;·&nbsp; Back → page 3
             </p>
           </div>
 
