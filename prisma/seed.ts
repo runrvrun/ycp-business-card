@@ -182,14 +182,6 @@ async function main() {
       sortOrder: 1,
     },
     {
-      name: "YCP Back",
-      description: "YCP standard back face — navy with YCP logo",
-      svgFile: "PRO-IDN-02.svg",
-      type: "BACK" as const,
-      isActive: true,
-      sortOrder: 1,
-    },
-    {
       name: "YCP Front (2 Emails)",
       description: "Front face with two email addresses",
       svgFile: "PRO-INT-2EMAIL.svg",

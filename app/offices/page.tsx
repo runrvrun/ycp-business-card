@@ -11,6 +11,9 @@ export default async function OfficesPage() {
   const session = await getServerSession(authOptions)
   if (!session) redirect("/")
 
+  const OFFICE_ADMINS = ["arfian.agus@ycp.com", "david.ly@ycp.com"]
+  const canManage = OFFICE_ADMINS.includes(session.user?.email ?? "")
+
   const offices = await prisma.office.findMany({ orderBy: { name: "asc" } })
 
   return (
@@ -23,7 +26,7 @@ export default async function OfficesPage() {
             Manage office details that can be reused when creating business cards.
           </p>
         </div>
-        <OfficeManager initialOffices={offices} />
+        <OfficeManager initialOffices={offices} canManage={canManage} />
       </main>
     </div>
   )

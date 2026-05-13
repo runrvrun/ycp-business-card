@@ -13,9 +13,13 @@ export async function GET() {
   return NextResponse.json(offices)
 }
 
+const OFFICE_ADMINS = ["arfian.agus@ycp.com", "david.ly@ycp.com"]
+
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions)
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+  if (!OFFICE_ADMINS.includes(session.user?.email ?? ""))
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 })
 
   const { name, address, phone, website } = await req.json()
   if (!name) return NextResponse.json({ error: "name is required" }, { status: 400 })

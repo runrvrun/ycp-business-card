@@ -13,8 +13,37 @@ interface Props {
   backTemplateName: string
 }
 
+function wrapSvgText(text: string, maxChars: number, dy: number): string {
+  if (!text) return '<tspan x="0" y="0"></tspan>'
+  const words = text.split(" ")
+  const lines: string[] = []
+  let current = ""
+  for (const word of words) {
+    if (!current) {
+      current = word
+    } else if (current.length + 1 + word.length <= maxChars) {
+      current += " " + word
+    } else {
+      lines.push(current)
+      current = word
+    }
+  }
+  if (current) lines.push(current)
+  return lines
+    .map((line, i) =>
+      i === 0
+        ? `<tspan x="0" y="0">${line}</tspan>`
+        : `<tspan x="0" dy="${dy}">${line}</tspan>`
+    )
+    .join("")
+}
+
 function substituteData(svg: string, data: CardData): string {
-  return svg
+  const withAddress = svg.replace(
+    /<tspan([^>]*)>\{\{address\}\}<\/tspan>/g,
+    () => wrapSvgText(data.address || "", 44, 22)
+  )
+  return withAddress
     .replace(/\{\{fullName\}\}/g, data.fullName || "")
     .replace(/\{\{position\}\}/g, data.position || "")
     .replace(/\{\{division\}\}/g, data.division || "")

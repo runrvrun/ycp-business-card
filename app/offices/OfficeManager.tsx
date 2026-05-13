@@ -72,7 +72,7 @@ function OfficeForm({
   )
 }
 
-export default function OfficeManager({ initialOffices }: { initialOffices: Office[] }) {
+export default function OfficeManager({ initialOffices, canManage }: { initialOffices: Office[]; canManage: boolean }) {
   const router = useRouter()
   const [offices, setOffices] = useState<Office[]>(initialOffices)
   const [adding, setAdding] = useState(false)
@@ -129,16 +129,18 @@ export default function OfficeManager({ initialOffices }: { initialOffices: Offi
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex justify-end">
-        <button
-          onClick={() => { setAdding(true); setEditingId(null) }}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#001C44] text-white text-sm font-medium hover:bg-[#001533] transition-colors"
-        >
-          <Plus size={15} /> Add Office
-        </button>
-      </div>
+      {canManage && (
+        <div className="flex justify-end">
+          <button
+            onClick={() => { setAdding(true); setEditingId(null) }}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#001C44] text-white text-sm font-medium hover:bg-[#001533] transition-colors"
+          >
+            <Plus size={15} /> Add Office
+          </button>
+        </div>
+      )}
 
-      {adding && (
+      {canManage && adding && (
         <div className="bg-white rounded-2xl border border-[#001C44]/30 p-6">
           <h2 className="text-sm font-semibold text-slate-700 mb-4">New Office</h2>
           <OfficeForm
@@ -198,21 +200,23 @@ export default function OfficeManager({ initialOffices }: { initialOffices: Offi
                       )}
                     </div>
                   </div>
-                  <div className="flex gap-2 shrink-0">
-                    <button
-                      onClick={() => { setEditingId(office.id); setAdding(false) }}
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 text-xs font-medium hover:bg-slate-50 transition-colors"
-                    >
-                      <Pencil size={12} /> Edit
-                    </button>
-                    <button
-                      onClick={() => handleDelete(office.id)}
-                      disabled={deletingId === office.id}
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-red-200 text-red-500 text-xs font-medium hover:bg-red-50 transition-colors disabled:opacity-50"
-                    >
-                      <Trash2 size={12} /> {deletingId === office.id ? "…" : "Delete"}
-                    </button>
-                  </div>
+                  {canManage && (
+                    <div className="flex gap-2 shrink-0">
+                      <button
+                        onClick={() => { setEditingId(office.id); setAdding(false) }}
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 text-xs font-medium hover:bg-slate-50 transition-colors"
+                      >
+                        <Pencil size={12} /> Edit
+                      </button>
+                      <button
+                        onClick={() => handleDelete(office.id)}
+                        disabled={deletingId === office.id}
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-red-200 text-red-500 text-xs font-medium hover:bg-red-50 transition-colors disabled:opacity-50"
+                      >
+                        <Trash2 size={12} /> {deletingId === office.id ? "…" : "Delete"}
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

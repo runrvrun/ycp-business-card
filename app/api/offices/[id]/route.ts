@@ -5,11 +5,15 @@ import { prisma } from "@/app/lib/prisma"
 
 export const runtime = "nodejs"
 
+const OFFICE_ADMINS = ["arfian.agus@ycp.com", "david.ly@ycp.com"]
+
 type Params = { params: Promise<{ id: string }> }
 
 export async function PUT(req: NextRequest, { params }: Params) {
   const session = await getServerSession(authOptions)
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+  if (!OFFICE_ADMINS.includes(session.user?.email ?? ""))
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 })
 
   const { id } = await params
   const { name, address, phone, website } = await req.json()
@@ -28,6 +32,8 @@ export async function PUT(req: NextRequest, { params }: Params) {
 export async function DELETE(_req: NextRequest, { params }: Params) {
   const session = await getServerSession(authOptions)
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+  if (!OFFICE_ADMINS.includes(session.user?.email ?? ""))
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 })
 
   const { id } = await params
   const existing = await prisma.office.findUnique({ where: { id } })
